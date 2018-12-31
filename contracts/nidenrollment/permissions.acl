@@ -1,0 +1,104 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+rule EverybodyCanReadEverything {
+    description: "Allow all participants read access to all resources"
+    participant: "org.dryice.enrollment.*"
+    operation: READ
+    resource: "org.dryice.enrollment.*"
+    action: ALLOW
+}
+
+rule ManagerHasFullAccessToProvinceAsset {
+    description: "Allow Manager full access to Province asset"
+    participant: "org.dryice.enrollment.Manager"
+    operation: ALL
+    resource: "org.dryice.enrollment.Province"
+    action: ALLOW
+}
+rule ManagerHasFullAccessToDistrictAsset {
+    description: "Allow Manager full access to District asset"
+    participant(p): "org.dryice.enrollment.Manager"
+    operation: ALL
+    resource(r): "org.dryice.enrollment.District"
+  	condition: (r.province.name != null )
+    action: ALLOW
+}
+rule ManagerHasFullAccessToMunicipalityAsset {
+    description: "Allow Manager full access to City asset"
+    participant(p): "org.dryice.enrollment.Manager"
+    operation: ALL
+    resource(r): "org.dryice.enrollment.Municipality"
+  	condition: (r.district.name != null)
+    action: ALLOW
+}
+rule AdminHasFullAccessToDistrictAsset {
+    description: "Allow Manager full access to District asset"
+    participant(p): "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource(r): "org.dryice.enrollment.District"
+  	condition: (r.province.name != null )
+    action: ALLOW
+}
+rule AdminHasFullAccessToMunicipalityAsset {
+    description: "Allow Manager full access to City asset"
+    participant(p): "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource(r): "org.dryice.enrollment.Municipality"
+  	condition: (r.district.name != null)
+    action: ALLOW
+}
+rule AdminHasFullAccessToApplicantForm {
+    description: "Allow Issuer full access to their ApplicantForm"
+    participant(p): "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource(r): "org.dryice.enrollment.ApplicantForm"
+  	condition: (r.issuer.name != null)
+    action: ALLOW
+    
+}
+rule IssuerHasFullAccessToApplicantForm {
+    description: "Allow Issuer full access to their ApplicantForm"
+    participant(p): "org.dryice.enrollment.IssuingOfficer"
+    operation: ALL
+    resource(r): "org.dryice.enrollment.ApplicantForm"
+  	condition: (p.getIdentifier()== r.issuer.getIdentifier())
+    action: ALLOW
+    
+}
+
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+

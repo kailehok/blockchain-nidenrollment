@@ -1,0 +1,40 @@
+/**
+ * New query file
+ */
+query selectAllProvince{
+    description: "Select all Provinces"
+    statement:
+        SELECT org.dryice.enrollment.Province
+           
+}
+
+
+query selectAllDistrict{
+    description: "Select all Districts"
+    statement:
+        SELECT org.dryice.enrollment.District
+           
+}
+
+
+query selectAllCity{
+    description: "Select all Municipalities"
+    statement:
+        SELECT org.dryice.enrollment.Municipality
+           
+}
+
+
+query selectDistrictByProvince{
+    description: "Select all Districts By their respective Province"
+    statement:
+        SELECT org.dryice.enrollment.District
+            WHERE (province==_$id)
+}
+
+query selectCityByDistrict{
+    description: "Select all Municipalities By their respective District"
+    statement:
+        SELECT org.dryice.enrollment.Municipality
+            WHERE (district==_$id)
+}
