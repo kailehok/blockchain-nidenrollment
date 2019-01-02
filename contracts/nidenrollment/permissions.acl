@@ -36,7 +36,7 @@ rule ManagerHasFullAccessToDistrictAsset {
     action: ALLOW
 }
 rule ManagerHasFullAccessToMunicipalityAsset {
-    description: "Allow Manager full access to City asset"
+    description: "Allow Manager full access to Municipality asset"
     participant(p): "org.dryice.enrollment.Manager"
     operation: ALL
     resource(r): "org.dryice.enrollment.Municipality"
@@ -52,7 +52,7 @@ rule AdminHasFullAccessToDistrictAsset {
     action: ALLOW
 }
 rule AdminHasFullAccessToMunicipalityAsset {
-    description: "Allow Manager full access to City asset"
+    description: "Allow Manager full access to Municipality asset"
     participant(p): "org.hyperledger.composer.system.NetworkAdmin"
     operation: ALL
     resource(r): "org.dryice.enrollment.Municipality"
