@@ -17,7 +17,7 @@ query selectAllDistrict{
 }
 
 
-query selectAllCity{
+query selectAllMunicipality{
     description: "Select all Municipalities"
     statement:
         SELECT org.dryice.enrollment.Municipality
@@ -32,7 +32,7 @@ query selectDistrictByProvince{
             WHERE (province==_$id)
 }
 
-query selectCityByDistrict{
+query selectMunicipalityByDistrict{
     description: "Select all Municipalities By their respective District"
     statement:
         SELECT org.dryice.enrollment.Municipality
